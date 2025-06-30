@@ -1,0 +1,20 @@
+{
+  "errors": [
+    {
+      "extensions": {
+        "code": "FIELDS_ON_CORRECT_TYPE",
+        "codes": [
+          "FIELDS_ON_CORRECT_TYPE"
+        ],
+        "number": "5.3.1"
+      },
+      "locations": [
+        {
+          "column": 3,
+          "line": 1
+        }
+      ],
+      "message": "Cannot query field \u0027invalidField\u0027 on type \u0027HelloQuery\u0027."
+    }
+  ]
+}

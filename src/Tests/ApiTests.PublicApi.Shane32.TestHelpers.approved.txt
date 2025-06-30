@@ -1,0 +1,105 @@
+namespace Microsoft.Extensions.DependencyInjection
+{
+    public static class UnsignedJwtServiceCollectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection ConfigureUnsignedJwtBearerTokens(this Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection, string scheme = "Bearer") { }
+    }
+}
+namespace Shane32.TestHelpers
+{
+    public class ClaimsList : System.Collections.Generic.List<System.Security.Claims.Claim>
+    {
+        public ClaimsList() { }
+        public void Add(string type, string value) { }
+        public System.Collections.Generic.IEnumerable<System.Security.Claims.Claim> FindAll(string type) { }
+        public System.Security.Claims.Claim? FindFirst(string type) { }
+        public string? FindFirstValue(string type) { }
+        public void Remove(string type) { }
+        public void Set(string type, string value) { }
+    }
+    public class ExecutionResponse
+    {
+        public ExecutionResponse() { }
+        [System.Text.Json.Serialization.JsonIgnore(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+        [System.Text.Json.Serialization.JsonPropertyName("data")]
+        public System.Text.Json.JsonElement? Data { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+        [System.Text.Json.Serialization.JsonPropertyName("errors")]
+        public System.Text.Json.JsonElement? Errors { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+        [System.Text.Json.Serialization.JsonPropertyName("extensions")]
+        public System.Text.Json.JsonElement? Extensions { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
+        public System.Net.HttpStatusCode StatusCode { get; set; }
+    }
+    public abstract class GraphQLTestBase : System.IAsyncDisposable, System.IDisposable, Xunit.IAsyncLifetime
+    {
+        public const string TestEnvironmentName = "Test";
+        public GraphQLTestBase() { }
+        public Shane32.TestHelpers.ClaimsList Claims { get; }
+        protected System.Net.Http.HttpClient Client { get; }
+        protected Microsoft.Extensions.DependencyInjection.IServiceCollection ServiceCollection { get; }
+        protected System.IServiceProvider Services { get; }
+        protected Microsoft.AspNetCore.Hosting.IWebHost WebHost { get; set; }
+        protected virtual void ConfigureWebHostBuilder(Microsoft.AspNetCore.Hosting.IWebHostBuilder webHostBuilder) { }
+        protected virtual string CreateAccessToken() { }
+        public virtual void Dispose() { }
+        public virtual System.Threading.Tasks.ValueTask DisposeAsync() { }
+        protected virtual System.Collections.Generic.IEnumerable<System.Security.Claims.Claim> GetClaims() { }
+        protected virtual string GetGraphQLPath() { }
+        protected virtual System.Threading.Tasks.Task InitializeAsync() { }
+        public virtual System.Threading.Tasks.Task<Shane32.TestHelpers.ExecutionResponse> RunQueryAsync(string query, object? variables = null) { }
+    }
+    public abstract class GraphQLTestBase<TStartup> : Shane32.TestHelpers.GraphQLTestBase
+        where TStartup :  class
+    {
+        protected GraphQLTestBase() { }
+        protected override void ConfigureWebHostBuilder(Microsoft.AspNetCore.Hosting.IWebHostBuilder webHostBuilder) { }
+    }
+}
+namespace Shouldly
+{
+    [Shouldly.ShouldlyMethods]
+    public static class GraphQLShouldlyExtensions
+    {
+        public static GraphQL.ExecutionResult ShouldBeSuccessful(this GraphQL.ExecutionResult executionResult, string? customMessage = null) { }
+        public static Shane32.TestHelpers.ExecutionResponse ShouldBeSuccessful(this Shane32.TestHelpers.ExecutionResponse executionResponse, string? customMessage = null) { }
+        public static GraphQL.ExecutionResult ShouldHaveData<T>(this GraphQL.ExecutionResult executionResult, T data, string? customMessage = null) { }
+        public static Shane32.TestHelpers.ExecutionResponse ShouldHaveData<T>(this Shane32.TestHelpers.ExecutionResponse executionResponse, T data, string? customMessage = null) { }
+        public static T ShouldHaveError<T>(this GraphQL.ExecutionResult executionResult, string? customMessage = null)
+            where T : System.Exception { }
+        public class SuccessfulShouldlyMessage : Shouldly.ActualShouldlyMessage
+        {
+            public SuccessfulShouldlyMessage(GraphQL.ExecutionResult executionResult, string? customMessage, [System.Runtime.CompilerServices.CallerMemberName] string shouldlyMethod = null) { }
+            public SuccessfulShouldlyMessage(Shane32.TestHelpers.ExecutionResponse executionResponse, string? customMessage, [System.Runtime.CompilerServices.CallerMemberName] string shouldlyMethod = null) { }
+            public override string ToString() { }
+        }
+    }
+    [Shouldly.ShouldlyMethods]
+    public static class SerializingShouldlyExtensions
+    {
+        public static string Serialize<T>(this T objectToSerialize) { }
+        public static void ShouldBeSimilarTo(this object? actual, object? expected, string? customMessage = null) { }
+        public static void ShouldBeSimilarToJson(this object? actual, string expectedJson, string? customMessage = null) { }
+        public static void ShouldMatchApproved(this string value) { }
+        public static void ShouldMatchApproved(this string value, string fileExtension = ".txt", string? discriminator = null) { }
+        public static void ShouldMatchApproved<T>(this T value, string fileExtension = ".txt", string? discriminator = null) { }
+    }
+}
+namespace System.Linq.Expressions
+{
+    public static class DebugViewExpressionExtensions
+    {
+        public static string GetDebugView(this System.Linq.Expressions.Expression exp) { }
+    }
+}
+namespace System
+{
+    public static class StringExtensions
+    {
+        public static T? FromJson<T>(this string json) { }
+        public static System.Threading.Tasks.ValueTask<T?> FromJsonAsync<T>(this System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default) { }
+        public static GraphQL.Inputs ToInputs(this System.Text.Json.JsonElement element) { }
+        public static GraphQL.Inputs ToInputs(this string json) { }
+    }
+}
