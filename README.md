@@ -1,5 +1,7 @@
 # Shane32.TestHelpers
 
+[![NuGet](https://img.shields.io/nuget/v/Shane32.TestHelpers.svg)](https://www.nuget.org/packages/Shane32.TestHelpers)
+
 This library contains a set of helper classes and methods to facilitate the testing of GraphQL applications.
 
 ## GraphQLTestBase
