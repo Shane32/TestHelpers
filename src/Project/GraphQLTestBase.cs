@@ -130,6 +130,8 @@ public abstract class GraphQLTestBase : IDisposable, Xunit.IAsyncLifetime, IAsyn
 
     /// <summary>
     /// Builds the <see cref="WebHostBuilder"/> that will be used to create the test server.
+    /// Call <see cref="IWebHostBuilder"/>.<see cref="Microsoft.AspNetCore.TestHost.WebHostBuilderExtensions.ConfigureTestServices(IWebHostBuilder, Action{IServiceCollection})">ConfigureTestServices</see>
+    /// to override services from your Startup with test services.
     /// </summary>
     protected virtual void ConfigureWebHostBuilder(IWebHostBuilder webHostBuilder)
     {
