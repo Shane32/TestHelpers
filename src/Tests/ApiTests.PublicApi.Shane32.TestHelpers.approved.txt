@@ -42,11 +42,14 @@ namespace Shane32.TestHelpers
         protected System.IServiceProvider Services { get; }
         protected Microsoft.AspNetCore.Hosting.IWebHost WebHost { get; set; }
         protected virtual void ConfigureWebHostBuilder(Microsoft.AspNetCore.Hosting.IWebHostBuilder webHostBuilder) { }
-        protected virtual string CreateAccessToken() { }
         public virtual void Dispose() { }
         public virtual System.Threading.Tasks.ValueTask DisposeAsync() { }
-        protected virtual System.Collections.Generic.IEnumerable<System.Security.Claims.Claim> GetClaims() { }
+        protected virtual System.Threading.Tasks.Task<string> GetAccessTokenAsync() { }
+        protected virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>> GetClaimsAsync() { }
         protected virtual string GetGraphQLPath() { }
+        protected virtual Microsoft.Extensions.Configuration.IConfiguration? GetServerConfig() { }
+        protected virtual System.Reflection.Assembly GetServerConfigAssembly() { }
+        protected virtual string? GetServerConfigResourceName(System.Reflection.Assembly assembly) { }
         protected virtual System.Threading.Tasks.Task InitializeAsync() { }
         public virtual System.Threading.Tasks.Task<Shane32.TestHelpers.ExecutionResponse> RunQueryAsync(string query, object? variables = null) { }
     }

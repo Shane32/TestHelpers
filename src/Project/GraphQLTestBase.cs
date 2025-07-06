@@ -23,7 +23,6 @@ public abstract class GraphQLTestBase<TStartup> : GraphQLTestBase
         base.ConfigureWebHostBuilder(webHostBuilder);
         webHostBuilder.UseStartup<TStartup>();
     }
-
 }
 
 /// <summary>
@@ -100,10 +99,10 @@ public abstract class GraphQLTestBase : IDisposable, Xunit.IAsyncLifetime, IAsyn
     /// <summary>
     /// Gets the server configuration JSON from the specified assembly.
     /// </summary>
-    private IConfiguration? GetServerConfig()
+    protected virtual IConfiguration? GetServerConfig()
     {
         var assembly = GetServerConfigAssembly();
-        return _serverConfigFiles.GetOrAdd(assembly, static assembly2 => {
+        return _serverConfigFiles.GetOrAdd(assembly, assembly2 => {
             //get all resource names from assembly, and find the one that ends with ".ServerConfig.json" or equals "ServerConfig.json" (case insensitive)
             var resourceName = GetServerConfigResourceName(assembly2);
             if (resourceName == null)
@@ -121,12 +120,12 @@ public abstract class GraphQLTestBase : IDisposable, Xunit.IAsyncLifetime, IAsyn
     /// Gets the assembly that contains the server configuration JSON.
     /// </summary>
     /// <returns></returns>
-    private Assembly GetServerConfigAssembly() => GetType().Assembly;
+    protected virtual Assembly GetServerConfigAssembly() => GetType().Assembly;
 
     /// <summary>
     /// Gets the name of the server configuration JSON resource.
     /// </summary>
-    private static string? GetServerConfigResourceName(Assembly assembly)
+    protected virtual string? GetServerConfigResourceName(Assembly assembly)
         => assembly.GetManifestResourceNames().FirstOrDefault(n => n.EndsWith(".ServerConfig.json", StringComparison.OrdinalIgnoreCase) || n.Equals("ServerConfig.json", StringComparison.OrdinalIgnoreCase));
 
     /// <summary>
@@ -178,7 +177,7 @@ public abstract class GraphQLTestBase : IDisposable, Xunit.IAsyncLifetime, IAsyn
         };
         httpRequestMessage.Content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
         if (Claims.Count > 0)
-            httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", CreateAccessToken());
+            httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessTokenAsync().ConfigureAwait(false));
         using var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
         if (httpResponseMessage.StatusCode != HttpStatusCode.OK && httpResponseMessage.StatusCode != HttpStatusCode.BadRequest)
             throw new InvalidOperationException($"GraphQL request failed with status code {httpResponseMessage.StatusCode}");
@@ -192,19 +191,19 @@ public abstract class GraphQLTestBase : IDisposable, Xunit.IAsyncLifetime, IAsyn
     /// <summary>
     /// Gets the list of claims that will be used to create the access token for the GraphQL queries.
     /// </summary>
-    protected virtual IEnumerable<Claim> GetClaims() => Claims;
+    protected virtual Task<IEnumerable<Claim>> GetClaimsAsync() => Task.FromResult<IEnumerable<Claim>>(Claims);
 
     /// <summary>
     /// Creates a JWT access token based on the <see cref="Claims"/>.
     /// </summary>
-    protected virtual string CreateAccessToken()
+    protected virtual async Task<string> GetAccessTokenAsync()
     {
         var now = DateTime.UtcNow;
         var descriptor = new SecurityTokenDescriptor();
         descriptor.Expires = now.AddMinutes(5);
         descriptor.NotBefore = now;
         descriptor.IssuedAt = now;
-        descriptor.Subject = new ClaimsIdentity(GetClaims());
+        descriptor.Subject = new ClaimsIdentity(await GetClaimsAsync().ConfigureAwait(false));
         var handler = new JsonWebTokenHandler();
         var token = handler.CreateToken(descriptor);
         return token;
