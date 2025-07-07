@@ -12,7 +12,7 @@ on:
 
 jobs:
   publish:
-    uses: Shane32/SharedWorkflows/.github/workflows/publish-nuget.yml@fix_coveralls
+    uses: Shane32/SharedWorkflows/.github/workflows/publish-nuget.yml@v1
     with:
       dotnet_folder: '.'
     secrets: inherit
