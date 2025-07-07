@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-check:
-    uses: Shane32/SharedWorkflows/.github/workflows/build-check.yml@fix_coveralls
+    uses: Shane32/SharedWorkflows/.github/workflows/build-check.yml@v1
     with:
       dotnet_folder: '.'
       coveralls: true
