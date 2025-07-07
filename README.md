@@ -1,6 +1,6 @@
 # Shane32.TestHelpers
 
-[![NuGet](https://img.shields.io/nuget/v/Shane32.TestHelpers.svg)](https://www.nuget.org/packages/Shane32.TestHelpers) [![Coverage Status](https://coveralls.io/repos/github/Shane32/GraphQL.AspNetCore3/badge.svg?branch=master)](https://coveralls.io/github/Shane32/GraphQL.TestHelpers?branch=master)
+[![NuGet](https://img.shields.io/nuget/v/Shane32.TestHelpers.svg)](https://www.nuget.org/packages/Shane32.TestHelpers) [![Coverage Status](https://coveralls.io/repos/github/Shane32/TestHelpers/badge.svg?branch=master)](https://coveralls.io/github/Shane32/TestHelpers?branch=master)
 
 This library contains a set of helper classes and methods to facilitate the testing of GraphQL applications.
 
