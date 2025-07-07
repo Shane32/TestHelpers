@@ -153,8 +153,15 @@ public abstract class GraphQLTestBase : IDisposable, Xunit.IAsyncLifetime, IAsyn
             })
             // ensure that IConfiguration is available in the service provider
             .ConfigureServices((context, services) => services.AddSingleton(context.Configuration))
-            // configure the JWT bearer tokens for the test server
-            .ConfigureTestServices(services => services.ConfigureUnsignedJwtBearerTokens());
+            // configure test services
+            .ConfigureTestServices(services => {
+                // configure the JWT bearer tokens for the test server
+                services.ConfigureUnsignedJwtBearerTokens();
+                // configure any services manually added by the test
+                foreach (var service in _serviceCollection) {
+                    services.Add(service);
+                }
+            });
     }
 
     /// <summary>
