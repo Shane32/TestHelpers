@@ -15,4 +15,3 @@ jobs:
       dotnet_folder: '.'
       coveralls: true
     secrets: inherit
-
